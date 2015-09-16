@@ -1,0 +1,48 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="adjusttime.lemoon"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system"
+     >
+<!-- android:sharedUserId="android.uid.system"  -->
+    
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission> 
+	<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+        
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <service android:name=".SNTP" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="adjusttime.lemoon.SNTP" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".ServiceReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        
+    </application>
+
+</manifest>
