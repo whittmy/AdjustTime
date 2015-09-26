@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -87,19 +88,16 @@ public class SNTP extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		//获取固件版本后，共享给 内容管理app
-		SharedPreferences sp = getSharedPreferences("sys_info", MODE_WORLD_WRITEABLE);  
-        Editor e = sp.edit();  
-        e.putString("ota_ver", SystemProperties.get("ro.ota.firmware", ""));  
-        e.commit();  
-        
-        e.putString("firm_ver", SystemProperties.get("ro.product.firmware", ""));
-        e.commit();
+		
+		SharedPreferences sp = getSharedPreferences("firm_info", MODE_MULTI_PROCESS|MODE_WORLD_READABLE);
+        sp.edit().putString("ota_ver", SystemProperties.get("ro.ota.firmware", "")).commit();  
+        sp.edit().putString("firm_ver", SystemProperties.get("ro.product.firmware", "")).commit();
  
 		//关闭usb调试
-		boolean enableAdb = (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) > 0);
-		if(enableAdb)
-			Settings.Secure.putInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0);
-		
+//		boolean enableAdb = (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) > 0);
+//		if(enableAdb)
+//			Settings.Secure.putInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0);
+//		
 		if(!mRunning){
 			//步骤2：启动handerhandler这个线程;
 			mht.start();
